@@ -53,12 +53,12 @@ export const SearchBar = () => {
                     onKeyDown={handleOnKeyDown}
                 />
             </div>
-            <div style={buttonStyle}>
+            {/* <div style={buttonStyle}>
                 <CompButton
                     buttonName="search"
                     onClick={handleOnClick}
                 />
-            </div>
+            </div> */}
         </div>
     );
 };

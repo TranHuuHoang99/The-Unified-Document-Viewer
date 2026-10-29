@@ -1,9 +1,11 @@
 import { expectFailure } from 'node:test';
 import { ENV } from './config/env.config.js'
 import express, {Application, NextFunction, Request, Response} from 'express'
+import ApiRoutes from './routes/api.routes.js';
 
 class App {
     private m_app: Application;
+    private m_apiRoute: ApiRoutes = new ApiRoutes();
 
     constructor() {
         this.m_app = express();
@@ -25,13 +27,19 @@ class App {
         centralized routing: all API request from frontend will go here
     */
     private _configureRoutes(): void {
-        // if receive prefix request api
         this.m_app.use('/api', (req: Request, res: Response, next: NextFunction) => {
             console.log("----------------------------------------");
             console.log(`[Incoming Request]: ${req.method} ${req.originalUrl}`);
             console.log("----------------------------------------");
-            
+            // pass to next route
+            next();
         });
+
+        /*
+            register route
+        */
+        this.m_app.use('/api', this.m_apiRoute.router);
+
         this.m_app.get('/health', (req: Request, res: Response) => {
             res.status(200).json({status: 'OK', timestamp: new Date()});
         });

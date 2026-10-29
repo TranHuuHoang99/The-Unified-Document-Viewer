@@ -1,10 +1,41 @@
 import React from "react";
+import { ISaleDocsItem } from "../hooks/useFetchDocuments";
 
-export const SalesDocumentTable = () => {
+interface ISaleDocTableItem {
+    saleDocData?: ISaleDocsItem | undefined;
+};
+
+export const SalesDocumentTable: React.FC<ISaleDocTableItem> = ({saleDocData}) => {
     return (
-        <div>
-            <div>
-                here is a define for sales document define detail
+        <div
+            style={
+                {
+                    width: '100%',
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: 'flex-start',
+                    padding: '10px',
+                    flex: 1
+                }
+            }
+        >
+            <div
+                style={
+                    {
+                        flex: 1
+                    }
+                }
+            >
+                SALES INFORMATION:
+            </div>
+            <div
+                style={
+                    {
+                        flex: 1
+                    }
+                }
+            >
+                {saleDocData?.message}
             </div>
         </div>
     );

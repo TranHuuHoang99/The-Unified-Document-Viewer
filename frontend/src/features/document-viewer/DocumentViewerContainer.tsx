@@ -2,17 +2,19 @@ import React, { useEffect } from "react";
 import { SalesDocumentTable } from "./components/SalesDocumentTable";
 import { ServicesDocumentTable } from "./components/ServicesDocumentTable";
 import { useSearchParams } from "react-router-dom";
-import { useFetchDocuments } from "./hooks/useFetchDocuments";
+import { ISaleDocsItem, IServiceDocsItem, useFetchDocuments } from "./hooks/useFetchDocuments";
 
 export const DocumentViewerContainer = () => {
     const [searchParams] = useSearchParams();
     const {saleDocs, serviceDocs, loading, error, triggerSearch} = useFetchDocuments();
+
     const vinQuery = searchParams.get("vin") || "";
     useEffect(() => {
         if (vinQuery) {
             triggerSearch(vinQuery);
         }
     }, [vinQuery]);
+
     return (
         <div
             style={
@@ -34,12 +36,7 @@ export const DocumentViewerContainer = () => {
                     }
                 }
             >
-                <div>
-                    <h2>
-                        {saleDocs}
-                    </h2>
-                </div>
-                <SalesDocumentTable />
+                <SalesDocumentTable saleDocData={saleDocs}/>
             </div>
 
             <div
@@ -49,12 +46,7 @@ export const DocumentViewerContainer = () => {
                     }
                 }
             >
-                <div>
-                    <h2>
-                        {serviceDocs}
-                    </h2>
-                </div>
-                <ServicesDocumentTable />
+                <ServicesDocumentTable serviceDocData={serviceDocs}/>
             </div>
         </div>
     );
