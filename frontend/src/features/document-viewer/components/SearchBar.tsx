@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom'
 import { CompInputField } from "../../../components/InputField";
 import { CompButton } from "../../../components/Button";
@@ -28,6 +28,11 @@ export const SearchBar = () => {
     const handleOnClick = () => {        
        navigate(`/document-viewer?vin=${encodeURIComponent(keyword)}`);
     }
+    useEffect(() => {
+        if (keyword.trim() === "") {
+            navigate("/document-viewer"); 
+        }
+    }, [keyword, navigate]);
     return (
         <div
             style={{

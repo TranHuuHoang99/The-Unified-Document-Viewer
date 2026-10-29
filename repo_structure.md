@@ -39,6 +39,7 @@ frontend/
 │   └── favicon.ico              # Static resources (Logo, icons, public assets)
 ├── src/
 │   ├── assets/                  # Internal assets (Images, global styles, fonts)
+│   ├── constants/               # Internal enum define
 │   ├── components/              # Shared/Reusable UI components across the application
 │   │   ├── Button.tsx           # Common button component
 │   │   ├── Input.tsx            # Common input field component

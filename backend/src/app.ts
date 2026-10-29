@@ -25,7 +25,13 @@ class App {
         centralized routing: all API request from frontend will go here
     */
     private _configureRoutes(): void {
-        // TODO: route
+        // if receive prefix request api
+        this.m_app.use('/api', (req: Request, res: Response, next: NextFunction) => {
+            console.log("----------------------------------------");
+            console.log(`[Incoming Request]: ${req.method} ${req.originalUrl}`);
+            console.log("----------------------------------------");
+            
+        });
         this.m_app.get('/health', (req: Request, res: Response) => {
             res.status(200).json({status: 'OK', timestamp: new Date()});
         });
