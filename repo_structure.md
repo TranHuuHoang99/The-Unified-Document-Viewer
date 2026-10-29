@@ -35,29 +35,52 @@ route will decide which method will go to which controller:
     + but before go to specific controller route will use middleware to check before that
 
 frontend/
-├── public/                  # static resources (Logo, favicon)
+├── public/
+│   └── favicon.ico              # Static resources (Logo, icons, public assets)
 ├── src/
-│   ├── assets/              # internal img and font
-│   ├── components/          # Component used for the entire of project (reusable UI)
-│   │   ├── Button.jsx       # common button
-│   │   ├── Input.jsx        # common input field
-│   │   └── LoadingSpinner.jsx # animation / effect while loading data
-│   ├── features/            # include frontend logic
+│   ├── assets/                  # Internal assets (Images, global styles, fonts)
+│   ├── components/              # Shared/Reusable UI components across the application
+│   │   ├── Button.tsx           # Common button component
+│   │   ├── Input.tsx            # Common input field component
+│   │   └── LoadingSpinner.tsx   # Animation effect displayed during data fetching
+│   ├── features/                # Feature-based modules containing specific domain logic
 │   │   └── document-viewer/
-│   │       ├── components/  # sub-components use for current feature
-│   │       │   ├── SearchBar.jsx      # VIN search bar
-│   │       │   ├── DocumentTable.jsx  # Document table
-│   │       │   └── SourceBadge.jsx    # Badge for document sources (Sales / Service)
+│   │       ├── components/      # Sub-components exclusive to this specific feature
+│   │       │   ├── SearchBar.tsx       # VIN search bar input
+│   │       │   ├── DocumentTable.tsx   # Data table to display document records
+│   │       │   └── SourceBadge.tsx     # Status badge for document sources (Sales / Service)
 │   │       ├── hooks/
-│   │       │   └── useFetchDocuments.js # Custom Hook handle logic for calling API from Backend, loading, error
-│   │       └── DocumentViewerContainer.jsx # Parent Component to distribute data flows (Smart Component)
-│   ├── services/            # Layer API to connect direct to Backend
-│   │   └── api.js           # Initialize Axios instance connect to Backend (example: localhost:5000)
-│   ├── utils/               # Ultilies function (example: check data time format, check VIN format)
-│   │   └── formatters.js
-│   ├── App.jsx              # React entpoint
-│   └── main.jsx             # Render React into HTML root
-├── .env                     # URL point to Backend (REACT_APP_API_URL or VITE_API_URL)
-├── index.html
-├── package.json
-└── vite.config.js           # configuration build (nếu dùng Vite)
+│   │       │   └── useFetchDocuments.ts # Custom hook managing API states (data, loading, error)
+│   │       └── DocumentViewerContainer.tsx # Smart component responsible for orchestrating data flows
+│   ├── services/                # Network and API communication layer
+│   │   └── api.ts               # Axios client instance pre-configured for Backend connection
+│   ├── utils/                   # General helper functions and utilities
+│   │   └── formatters.ts        # Pure functions for formatting (e.g., date-time, VIN masks)
+│   ├── App.tsx                  # React application root entry component
+│   └── main.tsx                 # Application mounting point onto the DOM root
+├── .env                         # Environment variables (VITE_API_URL, etc.)
+├── index.html                   # HTML entry point template
+├── package.json                 # Project dependencies and script definitions
+├── tsconfig.json                # TypeScript compiler configuration options
+└── vite.config.ts               # Vite build tool configuration file (TypeScript variant)
+
+
+[ UI / User ]
+         │ (interact: do search things in search engine bar)
+         ▼
+[ component: SearchBar.jsx / DocumentTable.jsx ] 
+         │ (pass state / activate next actions)
+         ▼
+[ container: DocumentViewerContainer.jsx ] (Smart Component - main management)
+         │ (invoke)
+         ▼
+[ hook: useFetchDocuments.js ] (Custom Hook - manage logic/API state)
+         │ (invoke)
+         ▼
+[ service: api.js ] (Axios Instance - internet connection)
+         │ ───► [ invoke API call to Backend ]
+         ▼
+[ utils: formatters.js ] (re-structe received data, example: date-time format)
+         │ (return cleaned data)
+         ▼
+[ return data back to Container ──► Re-render to each Component and display to UI ]
