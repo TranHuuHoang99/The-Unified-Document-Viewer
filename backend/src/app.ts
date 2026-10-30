@@ -2,6 +2,7 @@ import { expectFailure } from 'node:test';
 import { ENV } from './config/env.config.js'
 import express, {Application, NextFunction, Request, Response} from 'express'
 import ApiRoutes from './routes/api.routes.js';
+import { generateDatabases } from '../database/sqlite.config.js';
 
 class App {
     private m_app: Application;
@@ -61,6 +62,8 @@ class App {
 
     public async startServer(): Promise<void> {
         try {
+            await this._configureSQLite();
+
             const PORT = ENV.PORT || 5000;
             console.log('Connecting kafka system consumers ...');
             // await kafka.connect();
@@ -72,6 +75,11 @@ class App {
             console.error('Failed to start server : ', error);
             process.exit(1);
         }
+    }
+
+    private async _configureSQLite(): Promise<void> {
+        await generateDatabases();
+        console.log("All VIN already loaded to RAM");
     }
 }
 
