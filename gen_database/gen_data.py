@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 # 1. Initialize a list of 24 unique VINs to distribute (ensuring 20 VINs for each system)
 # Standard 17-character VIN structure
 def generate_vin(index):
-    return f"1HGCR2F8XHA000{str(index).zfill(2)}"
+    return f"1HGCR2F83HA{str(index).zfill(6)}"
 
 # Distribute VINs based on the requested ratio:
 # 16 Shared VINs (80% of 20)
@@ -59,6 +59,7 @@ for i, vin in enumerate(service_vins):
         "document_id": f"SRV-2026-{str(i+1).zfill(3)}",
         "vin": vin,
         "customer_id": f"CUST-SRV-{2000 + i}",
+        "customer_name": random.choice(["John Doe", "Jane Smith", "Robert Johnson", "Emily Davis", "Michael Brown"]),
         "document_type": random.choice(service_docs),
         "service_advisor": random.choice(["Michael Scott", "Dwight Schrute", "Jim Halpert"]),
         "technician_name": random.choice(["David Mechanic", "Paul Repair", "Tom Fixer"]),

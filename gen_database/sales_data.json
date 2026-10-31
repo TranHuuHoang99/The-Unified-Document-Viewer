@@ -1,7 +1,7 @@
 [
   {
     "document_id": "SAL-2026-001",
-    "vin": "1HGCR2F8XHA00020",
+    "vin": "1HGCR2F83HA000020",
     "customer_id": "CUST-SAL-1000",
     "customer_name": "Michael Brown",
     "document_type": "Insurance_Policy",
@@ -13,7 +13,7 @@
   },
   {
     "document_id": "SAL-2026-002",
-    "vin": "1HGCR2F8XHA00006",
+    "vin": "1HGCR2F83HA000006",
     "customer_id": "CUST-SAL-1001",
     "customer_name": "John Doe",
     "document_type": "Invoice_Bill_of_Sale",
@@ -25,7 +25,7 @@
   },
   {
     "document_id": "SAL-2026-003",
-    "vin": "1HGCR2F8XHA00008",
+    "vin": "1HGCR2F83HA000008",
     "customer_id": "CUST-SAL-1002",
     "customer_name": "Robert Johnson",
     "document_type": "Insurance_Policy",
@@ -37,7 +37,7 @@
   },
   {
     "document_id": "SAL-2026-004",
-    "vin": "1HGCR2F8XHA00009",
+    "vin": "1HGCR2F83HA000009",
     "customer_id": "CUST-SAL-1003",
     "customer_name": "Jane Smith",
     "document_type": "Finance_Lease_Agreement",
@@ -49,7 +49,7 @@
   },
   {
     "document_id": "SAL-2026-005",
-    "vin": "1HGCR2F8XHA00015",
+    "vin": "1HGCR2F83HA000015",
     "customer_id": "CUST-SAL-1004",
     "customer_name": "Robert Johnson",
     "document_type": "Insurance_Policy",
@@ -61,7 +61,7 @@
   },
   {
     "document_id": "SAL-2026-006",
-    "vin": "1HGCR2F8XHA00017",
+    "vin": "1HGCR2F83HA000017",
     "customer_id": "CUST-SAL-1005",
     "customer_name": "Emily Davis",
     "document_type": "Insurance_Policy",
@@ -73,7 +73,7 @@
   },
   {
     "document_id": "SAL-2026-007",
-    "vin": "1HGCR2F8XHA00001",
+    "vin": "1HGCR2F83HA000001",
     "customer_id": "CUST-SAL-1006",
     "customer_name": "Jane Smith",
     "document_type": "Insurance_Policy",
@@ -85,7 +85,7 @@
   },
   {
     "document_id": "SAL-2026-008",
-    "vin": "1HGCR2F8XHA00016",
+    "vin": "1HGCR2F83HA000016",
     "customer_id": "CUST-SAL-1007",
     "customer_name": "Jane Smith",
     "document_type": "Sales_Contract",
@@ -97,7 +97,7 @@
   },
   {
     "document_id": "SAL-2026-009",
-    "vin": "1HGCR2F8XHA00003",
+    "vin": "1HGCR2F83HA000003",
     "customer_id": "CUST-SAL-1008",
     "customer_name": "Michael Brown",
     "document_type": "Finance_Lease_Agreement",
@@ -109,7 +109,7 @@
   },
   {
     "document_id": "SAL-2026-010",
-    "vin": "1HGCR2F8XHA00013",
+    "vin": "1HGCR2F83HA000013",
     "customer_id": "CUST-SAL-1009",
     "customer_name": "John Doe",
     "document_type": "Sales_Contract",
@@ -121,7 +121,7 @@
   },
   {
     "document_id": "SAL-2026-011",
-    "vin": "1HGCR2F8XHA00019",
+    "vin": "1HGCR2F83HA000019",
     "customer_id": "CUST-SAL-1010",
     "customer_name": "John Doe",
     "document_type": "Sales_Contract",
@@ -133,7 +133,7 @@
   },
   {
     "document_id": "SAL-2026-012",
-    "vin": "1HGCR2F8XHA00005",
+    "vin": "1HGCR2F83HA000005",
     "customer_id": "CUST-SAL-1011",
     "customer_name": "Michael Brown",
     "document_type": "Sales_Contract",
@@ -145,7 +145,7 @@
   },
   {
     "document_id": "SAL-2026-013",
-    "vin": "1HGCR2F8XHA00007",
+    "vin": "1HGCR2F83HA000007",
     "customer_id": "CUST-SAL-1012",
     "customer_name": "Jane Smith",
     "document_type": "Insurance_Policy",
@@ -157,7 +157,7 @@
   },
   {
     "document_id": "SAL-2026-014",
-    "vin": "1HGCR2F8XHA00018",
+    "vin": "1HGCR2F83HA000018",
     "customer_id": "CUST-SAL-1013",
     "customer_name": "Emily Davis",
     "document_type": "Sales_Contract",
@@ -169,7 +169,7 @@
   },
   {
     "document_id": "SAL-2026-015",
-    "vin": "1HGCR2F8XHA00010",
+    "vin": "1HGCR2F83HA000010",
     "customer_id": "CUST-SAL-1014",
     "customer_name": "Michael Brown",
     "document_type": "Finance_Lease_Agreement",
@@ -181,7 +181,7 @@
   },
   {
     "document_id": "SAL-2026-016",
-    "vin": "1HGCR2F8XHA00002",
+    "vin": "1HGCR2F83HA000002",
     "customer_id": "CUST-SAL-1015",
     "customer_name": "Jane Smith",
     "document_type": "Insurance_Policy",
@@ -193,7 +193,7 @@
   },
   {
     "document_id": "SAL-2026-017",
-    "vin": "1HGCR2F8XHA00014",
+    "vin": "1HGCR2F83HA000014",
     "customer_id": "CUST-SAL-1016",
     "customer_name": "Jane Smith",
     "document_type": "Finance_Lease_Agreement",
@@ -205,7 +205,7 @@
   },
   {
     "document_id": "SAL-2026-018",
-    "vin": "1HGCR2F8XHA00012",
+    "vin": "1HGCR2F83HA000012",
     "customer_id": "CUST-SAL-1017",
     "customer_name": "Emily Davis",
     "document_type": "Insurance_Policy",
@@ -217,7 +217,7 @@
   },
   {
     "document_id": "SAL-2026-019",
-    "vin": "1HGCR2F8XHA00011",
+    "vin": "1HGCR2F83HA000011",
     "customer_id": "CUST-SAL-1018",
     "customer_name": "John Doe",
     "document_type": "Finance_Lease_Agreement",
@@ -229,7 +229,7 @@
   },
   {
     "document_id": "SAL-2026-020",
-    "vin": "1HGCR2F8XHA00004",
+    "vin": "1HGCR2F83HA000004",
     "customer_id": "CUST-SAL-1019",
     "customer_name": "John Doe",
     "document_type": "Sales_Contract",

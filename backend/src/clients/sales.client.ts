@@ -1,42 +1,14 @@
-import { EKafkaSalesTopics } from "../enums/kafka.enums.js";
-import { BaseClient } from "./base.client.js";
+import { ENV } from '../config/env.config.js';
+import { IRawSalesDocument } from '../interfaces/document.interface.js';
+import { BaseHttpClient } from './base.client.js';
 
-
-export class SaleClients extends BaseClient {
-    constructor() {
-        super();
-    }
-
-    public async postSaleDocs(payload: any): Promise<void> {
-        const messages = [
-            {
-                key: payload.id || null,
-                value: payload,
-                headers: { eventType: 'CreateDocument' }
-            }
-        ];
-        await this.emit(EKafkaSalesTopics.SALE_DOCUMENT_POST, messages);
-    }
-
-    public async putSaleDocs(payload: any): Promise<void> {
-        const messages = [
-            {
-                key: payload.id || null,
-                value: payload,
-                headers: { eventType: 'ReplaceDocument' }
-            }
-        ];
-        await this.emit(EKafkaSalesTopics.SALE_DOCUMENT_PUT, messages);
-    }
-
-    public async patchSaleDocs(payload: any): Promise<void> {
-        const messages = [
-            {
-                key: payload.id || null,
-                value: payload,
-                headers: { eventType: 'UpdateDocument' }
-            }
-        ];
-        await this.emit(EKafkaSalesTopics.SALE_DOCUMENT_PATCH, messages);
+/*
+    HTTP client for the mocked Sales dealership system.
+*/
+export class SalesClient extends BaseHttpClient {
+    public fetchDocuments(vin: string, signal: AbortSignal): Promise<IRawSalesDocument[]> {
+        const url = new URL('/api/sales/docs', ENV.SALES_API_URL);
+        url.searchParams.set('vin', vin);
+        return this.getDocuments<IRawSalesDocument>('SALES', url.toString(), signal);
     }
 }

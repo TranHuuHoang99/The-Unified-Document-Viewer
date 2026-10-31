@@ -5,6 +5,10 @@ import { DEFAULT_SOURCE_STATUS, IDocumentSearchResponse, IUnifiedDocument, ISour
 type SourceMap = Record<'SALES' | 'SERVICE', ISourceStatus>;
 
 interface IUseVehicleDocumentsResult {
+<<<<<<< Updated upstream
+=======
+    vin: string;
+>>>>>>> Stashed changes
     documents: IUnifiedDocument[];
     sources: SourceMap;
     partial: boolean;
@@ -60,6 +64,10 @@ export const useVehicleDocuments = (vin: string): IUseVehicleDocumentsResult => 
     }, [vin]);
 
     return {
+<<<<<<< Updated upstream
+=======
+        vin,
+>>>>>>> Stashed changes
         documents: data?.documents ?? [],
         sources: data?.sources ?? EMPTY_SOURCES,
         partial: data?.partial ?? false,

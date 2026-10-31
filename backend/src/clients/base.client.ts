@@ -1,54 +1,52 @@
-import { Kafka, Producer, Message } from "kafkajs";
-import { ENV } from "../config/env.config.js";
+/*
+    Error raised when an upstream dealership system cannot be reached
+    or answers with an error status. Allows the aggregator to call
+    Promise.allSettled and report per-source status.
+*/
+export class UpstreamError extends Error {
+    public readonly source: string;
+    public readonly statusCode: number | undefined;
 
-export abstract class BaseClient {
-    protected static m_kafka: Kafka;
-    protected static m_producer: Producer;
-    protected static m_isConnected: boolean =  false;
-
-    constructor() {
-        if (BaseClient.m_kafka === undefined) {
-            BaseClient.m_kafka = new Kafka({
-                clientId: ENV.KAFKA_CLIENT_ID || 'default-id',
-                brokers: ENV.KAFKA_BROKERS ? ENV.KAFKA_BROKERS.split(',') : ['localhost:6666'],
-            });
-        }
-
-        if (BaseClient.m_producer === undefined) {
-            BaseClient.m_producer = BaseClient.m_kafka.producer();
-        }
+    constructor(source: string, message: string, statusCode?: number) {
+        super(message);
+        this.name = 'UpstreamError';
+        this.source = source;
+        this.statusCode = statusCode;
     }
+}
 
-    protected async connectProducer(): Promise<void> {
-        if (!BaseClient.m_isConnected) {
-            await BaseClient.m_producer.connect();
-            BaseClient.m_isConnected = true;
-        }
-    }
+interface IUpstreamResponse<T> {
+    success: boolean;
+    vin: string;
+    count: number;
+    documents: T[];
+}
 
-    /*
-        use for post/put/patch -> push to kafka and let microservice handle
-    */
-    protected async emit(topic: string, messages: Message[]): Promise<void> {
+/*
+    Shared HTTP client used by the sales / service clients.
+    - one AbortSignal covers the whole upstream call, so the aggregator
+      can enforce one timeout across all sources
+*/
+export abstract class BaseHttpClient {
+    protected async getDocuments<T>(source: string, url: string, signal: AbortSignal): Promise<T[]> {
+        let response: Response;
         try {
-            await this.connectProducer();
-            await BaseClient.m_producer.send({
-                topic,
-                messages: messages.map((msg) => ({
-                    ...msg,
-                    value: typeof msg.value === 'object' ? JSON.stringify(msg.value) : msg.value
-                }))
-            });
-        } catch (err) {
-            console.error(`[kafka base client] failed to send data to topc ${topic}`);
-            throw err;
+            response = await fetch(url, { signal });
+        } catch (error) {
+            if (error instanceof Error && error.name === 'AbortError') {
+                throw new UpstreamError(source, `${source} system timed out`);
+            }
+            throw new UpstreamError(source, `${source} system is unreachable`);
         }
-    }
 
-    public async disconnect(): Promise<void> {
-        if (BaseClient.m_isConnected) {
-            await BaseClient.m_producer.disconnect();
-            BaseClient.m_isConnected = false;
+        if (!response.ok) {
+            throw new UpstreamError(source, `${source} system responded with HTTP ${response.status}`, response.status);
         }
+
+        const body = (await response.json()) as IUpstreamResponse<T>;
+        if (!body.success || !Array.isArray(body.documents)) {
+            throw new UpstreamError(source, `${source} system returned an unexpected payload`);
+        }
+        return body.documents;
     }
 }

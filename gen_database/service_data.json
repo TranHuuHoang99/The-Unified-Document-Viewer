@@ -1,7 +1,7 @@
 [
   {
     "document_id": "SRV-2026-001",
-    "vin": "1HGCR2F8XHA00002",
+    "vin": "1HGCR2F83HA000002",
     "customer_id": "CUST-SRV-2000",
     "document_type": "Warranty_Claim",
     "service_advisor": "Dwight Schrute",
@@ -10,11 +10,12 @@
     "mileage_odometer": 43990,
     "total_cost": 1487,
     "status": "Closed",
-    "file_url": "https://service.mock001.pdf"
+    "file_url": "https://service.mock001.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-002",
-    "vin": "1HGCR2F8XHA00015",
+    "vin": "1HGCR2F83HA000015",
     "customer_id": "CUST-SRV-2001",
     "document_type": "Repair_Order",
     "service_advisor": "Michael Scott",
@@ -23,11 +24,12 @@
     "mileage_odometer": 33628,
     "total_cost": 963,
     "status": "Closed",
-    "file_url": "https://service.mock002.pdf"
+    "file_url": "https://service.mock002.pdf",
+    "customer_name": "Robert Johnson"
   },
   {
     "document_id": "SRV-2026-003",
-    "vin": "1HGCR2F8XHA00005",
+    "vin": "1HGCR2F83HA000005",
     "customer_id": "CUST-SRV-2002",
     "document_type": "Repair_Order",
     "service_advisor": "Michael Scott",
@@ -36,11 +38,12 @@
     "mileage_odometer": 17635,
     "total_cost": 1464,
     "status": "Closed",
-    "file_url": "https://service.mock003.pdf"
+    "file_url": "https://service.mock003.pdf",
+    "customer_name": "Michael Brown"
   },
   {
     "document_id": "SRV-2026-004",
-    "vin": "1HGCR2F8XHA00014",
+    "vin": "1HGCR2F83HA000014",
     "customer_id": "CUST-SRV-2003",
     "document_type": "Repair_Order",
     "service_advisor": "Dwight Schrute",
@@ -49,11 +52,12 @@
     "mileage_odometer": 8742,
     "total_cost": 1345,
     "status": "Closed",
-    "file_url": "https://service.mock004.pdf"
+    "file_url": "https://service.mock004.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-005",
-    "vin": "1HGCR2F8XHA00006",
+    "vin": "1HGCR2F83HA000006",
     "customer_id": "CUST-SRV-2004",
     "document_type": "Multi_Point_Inspection",
     "service_advisor": "Dwight Schrute",
@@ -62,11 +66,12 @@
     "mileage_odometer": 42907,
     "total_cost": 384,
     "status": "Closed",
-    "file_url": "https://service.mock005.pdf"
+    "file_url": "https://service.mock005.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-006",
-    "vin": "1HGCR2F8XHA00001",
+    "vin": "1HGCR2F83HA000001",
     "customer_id": "CUST-SRV-2005",
     "document_type": "Warranty_Claim",
     "service_advisor": "Michael Scott",
@@ -75,11 +80,12 @@
     "mileage_odometer": 8176,
     "total_cost": 968,
     "status": "Closed",
-    "file_url": "https://service.mock006.pdf"
+    "file_url": "https://service.mock006.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-007",
-    "vin": "1HGCR2F8XHA00016",
+    "vin": "1HGCR2F83HA000016",
     "customer_id": "CUST-SRV-2006",
     "document_type": "Warranty_Claim",
     "service_advisor": "Jim Halpert",
@@ -88,11 +94,12 @@
     "mileage_odometer": 13303,
     "total_cost": 176,
     "status": "Closed",
-    "file_url": "https://service.mock007.pdf"
+    "file_url": "https://service.mock007.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-008",
-    "vin": "1HGCR2F8XHA00022",
+    "vin": "1HGCR2F83HA000022",
     "customer_id": "CUST-SRV-2007",
     "document_type": "Multi_Point_Inspection",
     "service_advisor": "Michael Scott",
@@ -101,11 +108,12 @@
     "mileage_odometer": 19585,
     "total_cost": 476,
     "status": "Closed",
-    "file_url": "https://service.mock008.pdf"
+    "file_url": "https://service.mock008.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-009",
-    "vin": "1HGCR2F8XHA00009",
+    "vin": "1HGCR2F83HA000009",
     "customer_id": "CUST-SRV-2008",
     "document_type": "Parts_Invoice",
     "service_advisor": "Dwight Schrute",
@@ -114,11 +122,12 @@
     "mileage_odometer": 43037,
     "total_cost": 1165,
     "status": "Closed",
-    "file_url": "https://service.mock009.pdf"
+    "file_url": "https://service.mock009.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-010",
-    "vin": "1HGCR2F8XHA00024",
+    "vin": "1HGCR2F83HA000024",
     "customer_id": "CUST-SRV-2009",
     "document_type": "Multi_Point_Inspection",
     "service_advisor": "Michael Scott",
@@ -127,11 +136,12 @@
     "mileage_odometer": 37310,
     "total_cost": 1241,
     "status": "Closed",
-    "file_url": "https://service.mock010.pdf"
+    "file_url": "https://service.mock010.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-011",
-    "vin": "1HGCR2F8XHA00023",
+    "vin": "1HGCR2F83HA000023",
     "customer_id": "CUST-SRV-2010",
     "document_type": "Multi_Point_Inspection",
     "service_advisor": "Jim Halpert",
@@ -140,11 +150,12 @@
     "mileage_odometer": 17419,
     "total_cost": 373,
     "status": "Closed",
-    "file_url": "https://service.mock011.pdf"
+    "file_url": "https://service.mock011.pdf",
+    "customer_name": "Robert Johnson"
   },
   {
     "document_id": "SRV-2026-012",
-    "vin": "1HGCR2F8XHA00008",
+    "vin": "1HGCR2F83HA000008",
     "customer_id": "CUST-SRV-2011",
     "document_type": "Warranty_Claim",
     "service_advisor": "Michael Scott",
@@ -153,11 +164,12 @@
     "mileage_odometer": 38092,
     "total_cost": 511,
     "status": "Closed",
-    "file_url": "https://service.mock012.pdf"
+    "file_url": "https://service.mock012.pdf",
+    "customer_name": "Robert Johnson"
   },
   {
     "document_id": "SRV-2026-013",
-    "vin": "1HGCR2F8XHA00012",
+    "vin": "1HGCR2F83HA000012",
     "customer_id": "CUST-SRV-2012",
     "document_type": "Repair_Order",
     "service_advisor": "Michael Scott",
@@ -166,11 +178,12 @@
     "mileage_odometer": 31990,
     "total_cost": 191,
     "status": "Closed",
-    "file_url": "https://service.mock013.pdf"
+    "file_url": "https://service.mock013.pdf",
+    "customer_name": "Emily Davis"
   },
   {
     "document_id": "SRV-2026-014",
-    "vin": "1HGCR2F8XHA00004",
+    "vin": "1HGCR2F83HA000004",
     "customer_id": "CUST-SRV-2013",
     "document_type": "Parts_Invoice",
     "service_advisor": "Dwight Schrute",
@@ -179,11 +192,12 @@
     "mileage_odometer": 23723,
     "total_cost": 551,
     "status": "Closed",
-    "file_url": "https://service.mock014.pdf"
+    "file_url": "https://service.mock014.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-015",
-    "vin": "1HGCR2F8XHA00011",
+    "vin": "1HGCR2F83HA000011",
     "customer_id": "CUST-SRV-2014",
     "document_type": "Warranty_Claim",
     "service_advisor": "Jim Halpert",
@@ -192,11 +206,12 @@
     "mileage_odometer": 16219,
     "total_cost": 447,
     "status": "Closed",
-    "file_url": "https://service.mock015.pdf"
+    "file_url": "https://service.mock015.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-016",
-    "vin": "1HGCR2F8XHA00021",
+    "vin": "1HGCR2F83HA000021",
     "customer_id": "CUST-SRV-2015",
     "document_type": "Parts_Invoice",
     "service_advisor": "Jim Halpert",
@@ -205,11 +220,12 @@
     "mileage_odometer": 38471,
     "total_cost": 743,
     "status": "Closed",
-    "file_url": "https://service.mock016.pdf"
+    "file_url": "https://service.mock016.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-017",
-    "vin": "1HGCR2F8XHA00013",
+    "vin": "1HGCR2F83HA000013",
     "customer_id": "CUST-SRV-2016",
     "document_type": "Multi_Point_Inspection",
     "service_advisor": "Michael Scott",
@@ -218,11 +234,12 @@
     "mileage_odometer": 16813,
     "total_cost": 733,
     "status": "Closed",
-    "file_url": "https://service.mock017.pdf"
+    "file_url": "https://service.mock017.pdf",
+    "customer_name": "John Doe"
   },
   {
     "document_id": "SRV-2026-018",
-    "vin": "1HGCR2F8XHA00003",
+    "vin": "1HGCR2F83HA000003",
     "customer_id": "CUST-SRV-2017",
     "document_type": "Parts_Invoice",
     "service_advisor": "Jim Halpert",
@@ -231,11 +248,12 @@
     "mileage_odometer": 16103,
     "total_cost": 278,
     "status": "Closed",
-    "file_url": "https://service.mock018.pdf"
+    "file_url": "https://service.mock018.pdf",
+    "customer_name": "Michael Brown"
   },
   {
     "document_id": "SRV-2026-019",
-    "vin": "1HGCR2F8XHA00007",
+    "vin": "1HGCR2F83HA000007",
     "customer_id": "CUST-SRV-2018",
     "document_type": "Warranty_Claim",
     "service_advisor": "Dwight Schrute",
@@ -244,11 +262,12 @@
     "mileage_odometer": 38177,
     "total_cost": 1072,
     "status": "Closed",
-    "file_url": "https://service.mock019.pdf"
+    "file_url": "https://service.mock019.pdf",
+    "customer_name": "Jane Smith"
   },
   {
     "document_id": "SRV-2026-020",
-    "vin": "1HGCR2F8XHA00010",
+    "vin": "1HGCR2F83HA000010",
     "customer_id": "CUST-SRV-2019",
     "document_type": "Repair_Order",
     "service_advisor": "Michael Scott",
@@ -257,6 +276,7 @@
     "mileage_odometer": 13547,
     "total_cost": 462,
     "status": "Closed",
-    "file_url": "https://service.mock020.pdf"
+    "file_url": "https://service.mock020.pdf",
+    "customer_name": "Michael Brown"
   }
 ]

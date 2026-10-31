@@ -55,7 +55,11 @@ export const SearchBar = () => {
                     </div>
                 )}
             </div>
+<<<<<<< Updated upstream
             {/* <CompButton buttonName="Search" onClick={submit} /> */}
+=======
+            <CompButton buttonName="Search" onClick={submit} />
+>>>>>>> Stashed changes
         </div>
     );
 };
