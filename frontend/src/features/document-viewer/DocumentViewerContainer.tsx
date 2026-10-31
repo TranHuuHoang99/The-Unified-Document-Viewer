@@ -40,15 +40,24 @@ const StatusPill: React.FC<{ name: keyof typeof SYSTEM_LABEL; status: ISourceSta
 export const DocumentViewerContainer: React.FC = () => {
     const [searchParams] = useSearchParams();
     const vin = (searchParams.get('vin') ?? '').trim().toUpperCase();
-    const [expandedId, setExpandedId] = useState<string | null>(null);
+    const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
 
     const { documents, sources, partial, message, loading, error } = useVehicleDocuments(vin);
 
-    const toggleRow = (id: string) => setExpandedId((current) => (current === id ? null : id));
+    const toggleRow = (id: string) =>
+        setExpandedIds((current) => {
+            const next = new Set(current);
+            if (next.has(id)) {
+                next.delete(id);
+            } else {
+                next.add(id);
+            }
+            return next;
+        });
 
     if (!vin) {
         return (
-            <div style={placeholderStyle}>
+            <div>
                 Enter a VIN above to see every document related to that vehicle.
             </div>
         );
@@ -60,7 +69,7 @@ export const DocumentViewerContainer: React.FC = () => {
 
     if (error) {
         return (
-            <div style={{ ...bannerStyle, backgroundColor: '#fee2e2', color: '#991b1b' }}>
+            <div style={{ color: '#991b1b' }}>
                 {error}
             </div>
         );
@@ -68,7 +77,7 @@ export const DocumentViewerContainer: React.FC = () => {
 
     if (partial) {
         return (
-            <div style={{ ...bannerStyle, backgroundColor: '#fef3c7', color: '#92400e' }}>
+            <div style={{ color: '#92400e' }}>
                 Partial results — at least one dealership system could not be reached. Showing what we have.
             </div>
         );
@@ -81,19 +90,15 @@ export const DocumentViewerContainer: React.FC = () => {
                 <StatusPill name="SALES" status={sources.SALES} />
                 <StatusPill name="SERVICE" status={sources.SERVICE} />
             </div>
+
+            <>
+                <div style={{ fontSize: '13px', color: '#6b7280' }}>{message}</div>
+                {documents.length > 0 ? (
+                    <DocumentTable documents={documents} expandedIds={expandedIds} onToggleRow={toggleRow} />
+                ) : (
+                    <div>No documents found for this VIN in either system.</div>
+                )}
+            </>
         </div>
     );
-};
-
-const placeholderStyle: React.CSSProperties = {
-    padding: '40px 0',
-    textAlign: 'center',
-    color: '#6b7280',
-    fontSize: '14px',
-};
-
-const bannerStyle: React.CSSProperties = {
-    padding: '10px 14px',
-    borderRadius: '6px',
-    fontSize: '13px',
 };

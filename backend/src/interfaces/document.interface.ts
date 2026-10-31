@@ -29,6 +29,7 @@ export interface IRawServiceDocument {
     document_id: string;
     vin: string;
     customer_id: string;
+    customer_name: string;
     document_type: string;
     service_advisor: string;
     technician_name: string;
@@ -54,7 +55,7 @@ export interface IUnifiedDocument {
     details: Record<string, string | number | null>;
 }
 
-export type ESourceStatus = 'ok' | 'empty' | 'error';
+export type ESourceStatus = 'ok' | 'empty' | 'error' | 'loading';
 
 export interface ISourceStatus {
     status: ESourceStatus;
@@ -68,8 +69,7 @@ export interface ISourceStatus {
 export interface ISearchOutcome {
     vin: string;
     documents: IUnifiedDocument[];
-    sources: Record<EDocumentSource, ISourceStatus>;
-    partial: boolean;
+    sources: ISourceStatus;
 }
 
 /*

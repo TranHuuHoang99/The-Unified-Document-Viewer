@@ -76,7 +76,7 @@
     "document_type": "Warranty_Claim",
     "service_advisor": "Michael Scott",
     "technician_name": "Tom Fixer",
-    "service_date": "2026-05-01",
+    "service_date": "2026-05-02",
     "mileage_odometer": 8176,
     "total_cost": 968,
     "status": "Closed",
@@ -278,5 +278,33 @@
     "status": "Closed",
     "file_url": "https://service.mock020.pdf",
     "customer_name": "Michael Brown"
+  },
+  {
+    "document_id": "SRV-2026-021",
+    "vin": "1HGCR2F83HA000001",
+    "customer_id": "CUST-SRV-2005",
+    "document_type": "Warranty_Claim",
+    "service_advisor": "Michael Scott",
+    "technician_name": "Tom Fixer",
+    "service_date": "2026-05-03",
+    "mileage_odometer": 8176,
+    "total_cost": 968,
+    "status": "Closed",
+    "file_url": "https://service.mock006-1.pdf",
+    "customer_name": "Jane Smith"
+  },
+  {
+    "document_id": "SRV-2026-022",
+    "vin": "1HGCR2F83HA000001",
+    "customer_id": "CUST-SRV-2005",
+    "document_type": "Warranty_Claim",
+    "service_advisor": "Michael Scott",
+    "technician_name": "Tom Fixer",
+    "service_date": "2026-05-04",
+    "mileage_odometer": 8176,
+    "total_cost": 968,
+    "status": "Closed",
+    "file_url": "https://service.mock006-2.pdf",
+    "customer_name": "Jane Smith"
   }
 ]

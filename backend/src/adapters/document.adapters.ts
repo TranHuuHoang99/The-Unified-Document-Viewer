@@ -32,7 +32,7 @@ export function mapServiceDocument(raw: IRawServiceDocument): IUnifiedDocument {
         status: raw.status,
         fileUrl: raw.file_url,
         details: {
-            customerName: null,
+            customerName: raw.customer_name ?? null,
             customerId: raw.customer_id ?? null,
             serviceAdvisor: raw.service_advisor ?? null,
             technician: raw.technician_name ?? null,

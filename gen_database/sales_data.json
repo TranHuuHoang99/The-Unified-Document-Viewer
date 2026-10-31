@@ -238,5 +238,17 @@
     "total_amount": 57047,
     "status": "Completed",
     "file_url": "https://sales.mock020.pdf"
+  },
+  {
+    "document_id": "SAL-2026-021",
+    "vin": "1HGCR2F83HA000114",
+    "customer_id": "CUST-SAL-1019",
+    "customer_name": "John Doe",
+    "document_type": "Sales_Contract",
+    "salesperson_name": "Alex Smith",
+    "sale_date": "2025-01-08",
+    "total_amount": 57047,
+    "status": "Completed",
+    "file_url": "https://sales.mock020.pdf"
   }
 ]

@@ -1,6 +1,7 @@
 import path from 'path';
 import { ENV } from '../config/env.config.js';
 import { buildDatabaseFromJson } from './sqlite.config.js';
+import { execSync } from 'child_process';
 
 /*
     Standalone seed script: npm run db:generate

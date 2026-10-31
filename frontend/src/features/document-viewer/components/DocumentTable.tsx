@@ -5,7 +5,7 @@ import { SourceBadge } from './SourceBadge';
 
 interface IDocumentTableProps {
     documents: IUnifiedDocument[];
-    expandedId: string | null;
+    expandedIds: Set<string>;
     onToggleRow: (id: string) => void;
 }
 
@@ -13,25 +13,25 @@ interface IDocumentTableProps {
     One consolidated table for documents from both dealership systems.
     The Source column makes the origin of each row explicit.
 */
-export const DocumentTable: React.FC<IDocumentTableProps> = ({ documents, expandedId, onToggleRow }) => {
+export const DocumentTable: React.FC<IDocumentTableProps> = ({ documents, expandedIds, onToggleRow }) => {
     const [hoveredId, setHoveredId] = useState<string | null>(null);
 
     return (
         <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '14px' }}>
             <thead>
                 <tr style={{ textAlign: 'left', backgroundColor: '#f3f4f6' }}>
-                    <th style={cellStyle}>Source</th>
-                    <th style={cellStyle}>Document ID</th>
-                    <th style={cellStyle}>Type</th>
-                    <th style={cellStyle}>Date</th>
-                    <th style={cellStyle}>Amount</th>
-                    <th style={cellStyle}>Status</th>
-                    <th style={cellStyle}>File</th>
+                    <th>Source</th>
+                    <th>Document ID</th>
+                    <th>Type</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>File</th>
                 </tr>
             </thead>
             <tbody>
                 {documents.map((doc) => {
-                    const isExpanded = expandedId === doc.id;
+                    const isExpanded = expandedIds.has(doc.id);
                     return (
                         <React.Fragment key={doc.id}>
                             <tr
@@ -45,15 +45,15 @@ export const DocumentTable: React.FC<IDocumentTableProps> = ({ documents, expand
                                 }}
                                 aria-expanded={isExpanded}
                             >
-                                <td style={cellStyle}>
+                                <td>
                                     <SourceBadge source={doc.source} />
                                 </td>
-                                <td style={{ ...cellStyle, fontFamily: 'monospace' }}>{doc.id}</td>
-                                <td style={cellStyle}>{formatDocumentType(doc.documentType)}</td>
-                                <td style={cellStyle}>{formatDate(doc.date)}</td>
-                                <td style={{ ...cellStyle, textAlign: 'right' }}>{formatAmount(doc.amount)}</td>
-                                <td style={cellStyle}>{doc.status}</td>
-                                <td style={cellStyle}>
+                                <td>{doc.id}</td>
+                                <td>{formatDocumentType(doc.documentType)}</td>
+                                <td>{formatDate(doc.date)}</td>
+                                <td>{formatAmount(doc.amount)}</td>
+                                <td>{doc.status}</td>
+                                <td>
                                     <a
                                         href={doc.fileUrl}
                                         target="_blank"
@@ -67,12 +67,12 @@ export const DocumentTable: React.FC<IDocumentTableProps> = ({ documents, expand
                             </tr>
                             {isExpanded && (
                                 <tr style={{ backgroundColor: '#f8fafc' }}>
-                                    <td colSpan={7} style={{ ...cellStyle, fontSize: '13px', color: '#374151' }}>
+                                    <td colSpan={7}>
                                         <strong>Source-specific details</strong>
                                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', marginTop: '6px' }}>
                                             {Object.entries(doc.details).map(([key, value]) => (
                                                 <span key={key}>
-                                                    <span style={{ color: '#6b7280', textTransform: 'capitalize' }}>
+                                                    <span>
                                                         {key.replace(/([A-Z])/g, ' $1')}:
                                                     </span>{' '}
                                                     {key === 'odometer' ? formatOdometer(value) : (value ?? '—')}
@@ -88,9 +88,4 @@ export const DocumentTable: React.FC<IDocumentTableProps> = ({ documents, expand
             </tbody>
         </table>
     );
-};
-
-const cellStyle: React.CSSProperties = {
-    padding: '10px 12px',
-    verticalAlign: 'middle',
 };

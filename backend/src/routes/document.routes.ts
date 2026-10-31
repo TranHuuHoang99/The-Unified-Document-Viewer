@@ -12,6 +12,6 @@ export class DocumentRoute {
 
     private _initController(): void {
         // unified search across both dealership systems
-        this.router.get('/', validateVin, this.m_documentController.search);
+        this.router.get('/', validateVin, this.m_documentController.searchDocs);
     }
 }

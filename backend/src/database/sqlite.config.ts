@@ -82,12 +82,27 @@ export async function buildDatabaseFromJson(
             VALUES (${placeholders})
         `);
 
-        await db.exec('BEGIN');
-        for (const row of rows) {
-            await insertStatement.run(columnNames.map((name) => row[name] ?? null));
+        try {
+            await db.exec('BEGIN');
+            try {
+                for (const row of rows) {
+                    try {
+                        await insertStatement.run(columnNames.map((name) => row[name] ?? null));
+                    } catch (error) {
+                        throw new Error(
+                            `Failed to insert ${primaryKey}=${String(row[primaryKey])} into ${tableName}: ${(error as Error).message}`,
+                            { cause: error }
+                        );
+                    }
+                }
+                await db.exec('COMMIT');
+            } catch (error) {
+                await db.exec('ROLLBACK');
+                throw error;
+            }
+        } finally {
+            await insertStatement.finalize();
         }
-        await db.exec('COMMIT');
-        await insertStatement.finalize();
     } finally {
         await db.close();
     }

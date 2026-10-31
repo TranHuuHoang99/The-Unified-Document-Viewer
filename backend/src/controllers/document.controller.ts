@@ -9,27 +9,46 @@ import { IDocumentSearchResponse } from '../interfaces/document.interface.js';
 export default class DocumentController {
     private m_documentService = new DocumentService();
 
-    public search = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    // public searchSaleDocs = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+    //     try {
+    //         const vin = String(req.query.vin);
+    //         const outcome = await this.m_documentService.searchSale(vin);
+
+    //         const body: IDocumentSearchResponse = {
+    //             success: true,
+    //             message: this._buildMessage(outcome.documents.length),
+    //             ...outcome,
+    //         };
+
+    //         res.status(200).json(body);
+    //     } catch (error) {
+    //         next(error);
+    //     }
+    // };
+
+    public searchDocs = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
             const vin = String(req.query.vin);
-            const outcome = await this.m_documentService.search(vin);
+            res.setHeader('Content-Type', 'text/event-stream');
+            res.setHeader('Cache-Control', 'no-cache');
+            res.setHeader('Connection', 'keep-alive');
+            res.status(200); // return 200 ok to establish connection flow
 
-            const body: IDocumentSearchResponse = {
-                success: true,
-                message: this._buildMessage(outcome.partial, outcome.documents.length),
-                ...outcome,
-            };
-
-            res.status(200).json(body);
-        } catch (error) {
-            next(error);
+            await this.m_documentService.searchDocs(vin, (outcome): void => {
+                const body: IDocumentSearchResponse = {
+                    success: true,
+                    message: this._buildMessage(outcome.documents.length),
+                    ...outcome,
+                };
+                res.write(`${JSON.stringify(body)}\n`);
+            });
+        } catch (err) {
+            console.log(`Error while stream data: ${err instanceof Error ? err.message : err}`);
+            next(err);
         }
-    };
+    }
 
-    private _buildMessage(partial: boolean, count: number): string {
-        if (partial) {
-            return 'Partial results: at least one dealership system could not be reached.';
-        }
+    private _buildMessage(count: number): string {
         return count > 0
             ? `${count} document${count === 1 ? '' : 's'} found.`
             : 'No documents found for this VIN.';

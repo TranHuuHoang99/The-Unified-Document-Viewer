@@ -31,4 +31,10 @@ export const ENV = {
     DATABASE_SERVICE_INPUT: process.env.DATABASE_SERVICE_INPUT || '../gen_database/service_data.json',
     DATABASE_SALE_OUTPUT: process.env.DATABASE_SALE_OUTPUT || './database/sales.db',
     DATABASE_SERVICE_OUTPUT: process.env.DATABASE_SERVICE_OUTPUT || './database/service.db',
+
+    /*
+        MOCK LANTENCY FOR SPECIFIC SERVICES
+    */
+    SALE_LATENCY_MS: process.env.SALE_LATENCY_MS || 0,
+    SERVICE_LATENCY_MS: process.env.SERVICE_LATENCY_MS || 0,
 };
