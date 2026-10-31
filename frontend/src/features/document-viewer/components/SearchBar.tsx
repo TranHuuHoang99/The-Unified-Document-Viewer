@@ -50,7 +50,7 @@ export const SearchBar = () => {
                     onKeyDown={handleOnKeyDown}
                 />
                 {showValidationError && (
-                    <div style={{ color: '#b91c1c', fontSize: '12px', marginTop: '-14px', marginBottom: '8px' }}>
+                    <div style={{ color: '#b91c1c' }}>
                         A VIN must be exactly 17 alphanumeric characters (I, O and Q are not allowed).
                     </div>
                 )}
