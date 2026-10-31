@@ -21,7 +21,6 @@ export const CompInputField: React.FC<IInputFieldProps> = ({
             style={{
                 width: '100%',
                 padding: "8px 12px",
-                marginBottom: "20px",
                 borderRadius: "4px",
                 border: "1px solid #ccc",
                 ...style,

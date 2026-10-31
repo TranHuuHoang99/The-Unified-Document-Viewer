@@ -1,22 +1,16 @@
+import { API_ENDPOINTS } from '../constants/api.endpoints';
+import { IDocumentSearchResponse } from '../types/document.types';
 
-export const fetchSaleDocuments = async (keyword: string) => {
-    if (!keyword || !keyword.trim()) {
-        return []; 
-    }
-    const response = await fetch(`/api/documents/sales/search?vin=${encodeURIComponent(keyword.trim())}`);
+/*
+    One request to the aggregation API; the backend fans out to both dealership systems.
+*/
+export const fetchDocumentsByVin = async (vin: string, signal?: AbortSignal): Promise<IDocumentSearchResponse> => {
+    const response = await fetch(API_ENDPOINTS.DOCUMENTS.SEARCH(vin), { signal: signal ?? null });
+
     if (!response.ok) {
-        throw new Error(`Error can not fetch sale data with VIN: ${keyword}`);
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.message || `Request failed with status ${response.status}`);
     }
+
     return response.json();
 };
-
-export const fetchServiceDocuments = async (keyword: string) => {
-    if (!keyword || !keyword.trim()) {
-        return []; 
-    }
-    const response = await fetch(`/api/documents/services/search?vin=${encodeURIComponent(keyword.trim())}`);
-    if (!response.ok) {
-        throw new Error(`Error can not fetch services data with VIN: ${keyword}`);
-    }
-    return response.json();
-}

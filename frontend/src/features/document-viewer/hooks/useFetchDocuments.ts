@@ -1,48 +1,70 @@
-import { useState, useCallback } from "react";
-import { fetchSaleDocuments } from "../../../services/api";
-import { fetchServiceDocuments } from "../../../services/api";
+import { useEffect, useRef, useState } from 'react';
+import { fetchDocumentsByVin } from '../../../services/api';
+import { DEFAULT_SOURCE_STATUS, IDocumentSearchResponse, IUnifiedDocument, ISourceStatus } from '../../../types/document.types';
 
-export interface ISaleDocsItem {
-    success: boolean;
+type SourceMap = Record<'SALES' | 'SERVICE', ISourceStatus>;
+
+interface IUseVehicleDocumentsResult {
+    documents: IUnifiedDocument[];
+    sources: SourceMap;
+    partial: boolean;
     message: string;
-};
-
-export interface IServiceDocsItem {
-    success: boolean;
-    message: string;
-}
-
-interface IFetchDocumentResult {
-    saleDocs: ISaleDocsItem | undefined;
-    serviceDocs: IServiceDocsItem | undefined;
     loading: boolean;
     error: string | null;
-    triggerSearch: (keyword: string) => Promise<void>;
+}
+
+const EMPTY_SOURCES: SourceMap = {
+    SALES: DEFAULT_SOURCE_STATUS,
+    SERVICE: DEFAULT_SOURCE_STATUS,
 };
 
-export const useFetchDocuments = (): IFetchDocumentResult => {
-    const [saleDocs, setSaleDocs] = useState();
-    const [serviceDocs, setServiceDocs] = useState();
-    const [loading, setLoadingAnim] = useState(false);
+/*
+    Fetches the consolidated document list for a VIN.
+    A new search aborts the previous one so stale responses never win.
+*/
+export const useVehicleDocuments = (vin: string): IUseVehicleDocumentsResult => {
+    const [data, setData] = useState<IDocumentSearchResponse | null>(null);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const controllerRef = useRef<AbortController | null>(null);
 
-    const triggerSearch = useCallback(async (keyword: string) => {
-        if (!keyword || !keyword.trim()) return;
-        try {
-            setLoadingAnim(true);
+    useEffect(() => {
+        if (!vin) {
+            setData(null);
             setError(null);
-            const [saleData, serviceData] = await Promise.all([
-                fetchSaleDocuments(keyword),
-                fetchServiceDocuments(keyword)
-            ]);
-            setSaleDocs(saleData);
-            setServiceDocs(serviceData);
-        } catch (err: any) {
-            setError(err.message || `Error while fetching data`);
-        } finally {
-            setLoadingAnim(false);
+            setLoading(false);
+            return;
         }
-    }, []);
 
-    return {saleDocs, serviceDocs, loading, error, triggerSearch};
+        controllerRef.current?.abort();
+        const controller = new AbortController();
+        controllerRef.current = controller;
+
+        setLoading(true);
+        setError(null);
+
+        fetchDocumentsByVin(vin, controller.signal)
+            .then((response) => {
+                if (!controller.signal.aborted) setData(response);
+            })
+            .catch((err: unknown) => {
+                if (controller.signal.aborted) return;
+                setData(null);
+                setError(err instanceof Error ? err.message : 'Unexpected error while loading documents');
+            })
+            .finally(() => {
+                if (!controller.signal.aborted) setLoading(false);
+            });
+
+        return () => controller.abort();
+    }, [vin]);
+
+    return {
+        documents: data?.documents ?? [],
+        sources: data?.sources ?? EMPTY_SOURCES,
+        partial: data?.partial ?? false,
+        message: data?.message ?? '',
+        loading,
+        error,
+    };
 };
