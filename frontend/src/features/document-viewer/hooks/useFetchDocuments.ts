@@ -1,70 +1,74 @@
 import { useEffect, useRef, useState } from 'react';
 import { fetchDocumentsByVin } from '../../../services/api';
-import { DEFAULT_SOURCE_STATUS, IDocumentSearchResponse, IUnifiedDocument, ISourceStatus } from '../../../types/document.types';
+import { EDocumentSource, IUnifiedDocument, ISourceStatus, LOADING_SOURCE_STATUS } from '../../../types/document.types';
 
-type SourceMap = Record<'SALES' | 'SERVICE', ISourceStatus>;
+export interface ISourceEntry {
+    status: ISourceStatus;
+    documents: IUnifiedDocument[];
+    message: string;
+}
+
+type SourceMap = Record<EDocumentSource, ISourceEntry>;
 
 interface IUseVehicleDocumentsResult {
-    documents: IUnifiedDocument[];
     sources: SourceMap;
-    partial: boolean;
-    message: string;
-    loading: boolean;
     error: string | null;
 }
 
-const EMPTY_SOURCES: SourceMap = {
-    SALES: DEFAULT_SOURCE_STATUS,
-    SERVICE: DEFAULT_SOURCE_STATUS,
-};
+/*
+    Each source starts with its own object so one settling never mutates the other.
+*/
+const createEmptySources = (): SourceMap => ({
+    SALES: { status: LOADING_SOURCE_STATUS, documents: [], message: '' },
+    SERVICE: { status: LOADING_SOURCE_STATUS, documents: [], message: '' },
+});
 
 /*
     Fetches the consolidated document list for a VIN.
-    A new search aborts the previous one so stale responses never win.
+
+    The backend streams one frame per dealership system, so each source settles
+    independently: whichever answers first is rendered right away, while the other
+    keeps its own loading state. A new search aborts the previous stream so stale
+    frames never win.
 */
 export const useVehicleDocuments = (vin: string): IUseVehicleDocumentsResult => {
-    const [data, setData] = useState<IDocumentSearchResponse | null>(null);
-    const [loading, setLoading] = useState(false);
+    const [sources, setSources] = useState<SourceMap>(createEmptySources);
     const [error, setError] = useState<string | null>(null);
     const controllerRef = useRef<AbortController | null>(null);
 
     useEffect(() => {
-        if (!vin) {
-            setData(null);
-            setError(null);
-            setLoading(false);
-            return;
-        }
+        // frontend self setting loading status and wait data stream from backend
+        setSources(createEmptySources());
+        setError(null);
+
+        if (!vin) return;
 
         controllerRef.current?.abort();
         const controller = new AbortController();
         controllerRef.current = controller;
 
-        setLoading(true);
-        setError(null);
-
-        fetchDocumentsByVin(vin, controller.signal)
-            .then((response) => {
-                if (!controller.signal.aborted) setData(response);
-            })
-            .catch((err: unknown) => {
+        fetchDocumentsByVin(
+            vin,
+            (frame) => {
                 if (controller.signal.aborted) return;
-                setData(null);
-                setError(err instanceof Error ? err.message : 'Unexpected error while loading documents');
-            })
-            .finally(() => {
-                if (!controller.signal.aborted) setLoading(false);
-            });
+
+                setSources((current) => ({
+                    ...current,
+                    [frame.source]: {
+                        status: frame.sources,
+                        documents: frame.documents,
+                        message: frame.message,
+                    },
+                }));
+            },
+            controller.signal
+        ).catch((err: unknown) => {
+            if (controller.signal.aborted) return;
+            setError(err instanceof Error ? err.message : 'Unexpected error while loading documents');
+        });
 
         return () => controller.abort();
     }, [vin]);
 
-    return {
-        documents: data?.documents ?? [],
-        sources: data?.sources ?? EMPTY_SOURCES,
-        partial: data?.partial ?? false,
-        message: data?.message ?? '',
-        loading,
-        error,
-    };
+    return { sources, error };
 };

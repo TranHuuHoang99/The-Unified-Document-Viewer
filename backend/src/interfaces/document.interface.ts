@@ -64,10 +64,12 @@ export interface ISourceStatus {
 }
 
 /*
-    Domain payload built by the aggregation service.
+    Domain payload built by the aggregation service: one frame per dealership
+    system, pushed as soon as that system answers.
 */
 export interface ISearchOutcome {
     vin: string;
+    source: EDocumentSource;
     documents: IUnifiedDocument[];
     sources: ISourceStatus;
 }

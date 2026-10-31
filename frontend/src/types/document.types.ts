@@ -3,7 +3,11 @@
 */
 
 export type EDocumentSource = 'SALES' | 'SERVICE';
-export type ESourceStatus = 'ok' | 'empty' | 'error';
+/*
+    Per-source lifecycle: each dealership system resolves on its own,
+    so one can still be pending while the other already has results.
+*/
+export type ESourceStatus = 'loading' | 'ok' | 'empty' | 'error';
 
 export interface IUnifiedDocument {
     id: string;
@@ -22,16 +26,21 @@ export interface ISourceStatus {
     error?: string;
 }
 
+/*
+    One streamed frame = one dealership system's answer.
+    `source` says which system produced it, so empty/error frames are still
+    attributable and each source can settle independently.
+*/
 export interface IDocumentSearchResponse {
     success: boolean;
     message: string;
     vin: string;
+    source: EDocumentSource;
     documents: IUnifiedDocument[];
-    sources: Record<EDocumentSource, ISourceStatus>;
-    partial: boolean;
+    sources: ISourceStatus;
 }
 
-export const DEFAULT_SOURCE_STATUS: ISourceStatus = { status: 'empty', count: 0 };
+export const LOADING_SOURCE_STATUS: ISourceStatus = { status: 'loading', count: 0 };
 
 /*
     Same rule as the backend: 17 chars, no I / O / Q.
