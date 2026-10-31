@@ -54,7 +54,6 @@ export const DocumentViewerContainer: React.FC = () => {
         );
     }
 
-<<<<<<< Updated upstream
     if (loading) {
         return (<LoadingSpinner />);
     }
@@ -75,8 +74,6 @@ export const DocumentViewerContainer: React.FC = () => {
         );
     }
 
-=======
->>>>>>> Stashed changes
     return (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%' }}>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
@@ -84,40 +81,6 @@ export const DocumentViewerContainer: React.FC = () => {
                 <StatusPill name="SALES" status={sources.SALES} />
                 <StatusPill name="SERVICE" status={sources.SERVICE} />
             </div>
-
-<<<<<<< Updated upstream
-            <>
-                <div style={{ fontSize: '13px', color: '#6b7280' }}>{message}</div>
-                {documents.length > 0 ? (
-                    <DocumentTable documents={documents} expandedId={expandedId} onToggleRow={toggleRow} />
-                ) : (
-                    <div style={placeholderStyle}>No documents found for this VIN in either system.</div>
-                )}
-            </>
-=======
-            {loading && <LoadingSpinner />}
-
-            {!loading && error && (
-                <div style={{ ...bannerStyle, backgroundColor: '#fee2e2', color: '#991b1b' }}>{error}</div>
-            )}
-
-            {!loading && !error && partial && (
-                <div style={{ ...bannerStyle, backgroundColor: '#fef3c7', color: '#92400e' }}>
-                    Partial results — at least one dealership system could not be reached. Showing what we have.
-                </div>
-            )}
-
-            {!loading && !error && (
-                <>
-                    <div style={{ fontSize: '13px', color: '#6b7280' }}>{message}</div>
-                    {documents.length > 0 ? (
-                        <DocumentTable documents={documents} expandedId={expandedId} onToggleRow={toggleRow} />
-                    ) : (
-                        <div style={placeholderStyle}>No documents found for this VIN in either system.</div>
-                    )}
-                </>
-            )}
->>>>>>> Stashed changes
         </div>
     );
 };
