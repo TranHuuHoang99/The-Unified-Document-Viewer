@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import { SuggestionService } from "../services/suggestion.service.js";
 
 export class SuggestionController {
-    private m_suggestionService = new SuggestionService();
+    private m_suggestionService = SuggestionService.instance();
 
     public loadSuggestion = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
         try {
@@ -22,7 +22,7 @@ export class SuggestionController {
             }
 
             const vin = String(queryVin);
-            res.status(200).json({ data: Array.from(this.m_suggestionService?.queryVinSuggestion(vin) ?? [])});
+            res.status(200).json({ data: await this.m_suggestionService.queryVinSuggestion(vin) });
         } catch (err) {
             next(err);
         }

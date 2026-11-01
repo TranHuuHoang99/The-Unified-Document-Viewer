@@ -57,12 +57,31 @@ export class SuggestionService {
     private m_vins: Set<string> = new Set<string>();
     private m_saleClient: SalesClient = SalesClient.instance();
     private m_serviceClient: ServiceClient = ServiceClient.instance();
-    private static m_vinTrie: VinTrie;
+    private static m_vinTrie: VinTrie = new VinTrie();
+    private static m_instance: SuggestionService | undefined;
+    private static m_loadPromise: Promise<void> | undefined;
 
-    constructor() {
-        this._fetchAllVinId();
-        SuggestionService.m_vinTrie = new VinTrie();
+    public static initialize(): Promise<void> {
+        if (!SuggestionService.m_loadPromise) {
+            SuggestionService.m_loadPromise = SuggestionService.instance()
+                ._fetchAllVinId()
+                .catch((error) => {
+                    console.error('failed to initialize vin suggestions:', error);
+                    SuggestionService.m_loadPromise = undefined;
+                });
+        }
+        return SuggestionService.m_loadPromise;
     }
+
+    public static instance(): SuggestionService {
+        if (!SuggestionService.m_instance) {
+            SuggestionService.m_instance = new SuggestionService();
+        }
+        return SuggestionService.m_instance;
+    }
+
+    // private so the vin fetch cannot be started before m_vinTrie exists
+    private constructor() {}
 
     private async _fetchAllVinId(): Promise<void> {
 
@@ -84,13 +103,20 @@ export class SuggestionService {
             console.error("can not load all vin from service system");
         }
 
-        console.log('all vins loaded: ', this.m_vins);
-        for (const str of this.m_vins) {
-            SuggestionService.m_vinTrie.insert(str);
+        if (saleArr.status === 'rejected' && serviceArr.status === 'rejected') {
+            throw new Error('both dealership systems are unreachable');
         }
+
+        const vinTrie = new VinTrie();
+        for (const str of this.m_vins) {
+            vinTrie.insert(str);
+        }
+        SuggestionService.m_vinTrie = vinTrie;
+        console.log('all vins loaded: ', this.m_vins);
     }
 
-    public queryVinSuggestion(vinSubstr: string): Iterable<string> {
-        return SuggestionService.m_vinTrie.query(vinSubstr);
+    public async queryVinSuggestion(vinSubstr: string): Promise<string[]> {
+        await SuggestionService.initialize();
+        return Array.from(SuggestionService.m_vinTrie.query(vinSubstr));
     }
 }

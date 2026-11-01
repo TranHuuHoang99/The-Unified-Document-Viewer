@@ -2,6 +2,7 @@ import express, { Application, NextFunction, Request, Response } from 'express';
 import { ENV } from './config/env.config.js';
 import ApiRoutes from './routes/api.routes.js';
 import { errorHandler } from './middlewares/error.middleware.js';
+import { SuggestionService } from './services/suggestion.service.js';
 
 /*
     Aggregation API.
@@ -42,7 +43,9 @@ class App {
         this.m_app.use(errorHandler);
     }
 
-    public startServer(): void {
+    public async startServer(): Promise<void> {
+        await SuggestionService.initialize();
+
         this.m_app.listen(ENV.PORT, () => {
             console.log(`Aggregation API running on http://localhost:${ENV.PORT}`);
             console.log(`Upstreams: SALES=${ENV.SALES_API_URL} SERVICE=${ENV.SERVICE_API_URL}`);
@@ -51,4 +54,7 @@ class App {
 }
 
 const app = new App();
-app.startServer();
+app.startServer().catch((error) => {
+    console.error('Failed to start the aggregation API:', error);
+    process.exit(1);
+});
