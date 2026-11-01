@@ -16,8 +16,8 @@ interface ICacheEntry {
     another, and no partial/combined state is ever produced.
 */
 export default class DocumentService {
-    private m_salesClient = new SalesClient();
-    private m_serviceClient = new ServiceClient();
+    private m_salesClient = SalesClient.instance();
+    private m_serviceClient = ServiceClient.instance();
     private m_cache = new Map<string, ICacheEntry>();
 
     public async searchDocs(vin: string, onChunk: (data: ISearchOutcome) => void): Promise<void> {
@@ -28,13 +28,13 @@ export default class DocumentService {
             this._fetchSource(
                 vinKey,
                 EDocumentSource.SALES,
-                (signal) => this.m_salesClient.fetchDocuments(vin, signal),
+                (signal) => this.m_salesClient?.fetchDocuments(vin, signal),
                 (raw: IRawSalesDocument) => mapSalesDocument(raw)
             ).then(onChunk),
             this._fetchSource(
                 vinKey,
                 EDocumentSource.SERVICE,
-                (signal) => this.m_serviceClient.fetchDocuments(vin, signal),
+                (signal) => this.m_serviceClient?.fetchDocuments(vin, signal),
                 (raw: IRawServiceDocument) => mapServiceDocument(raw)
             ).then(onChunk),
         ]);

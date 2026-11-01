@@ -13,13 +13,20 @@ export default class DocumentController {
     private m_documentService = new DocumentService();
 
     public searchDocs = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
-        const vin = String(req.query.vin);
+        const contentType = req.headers['content-type'];
+        const acceptHead = req.headers['accept'];
+        console.log(`[SEARCH DOCS] content type : ${contentType}, accept headers: ${acceptHead}`);
+        if (acceptHead !== 'application/x-ndjson') {
+            res.status(406).send(`Docs search only support request x-ndjson`);
+            return;
+        }
 
+        const vin = String(req.query.vin);
         res.status(200);
-        res.setHeader('Content-Type', 'application/x-ndjson');
-        res.setHeader('Cache-Control', 'no-cache');
-        res.setHeader('X-Accel-Buffering', 'no');
-        res.flushHeaders();
+        res.setHeader('Content-Type', 'application/x-ndjson'); // Newline-Delimited JSON
+        res.setHeader('Cache-Control', 'no-cache'); // disable caching this http request
+        res.setHeader('X-Accel-Buffering', 'no'); // disable gathering data from proxy server
+        res.flushHeaders(); // response back to frontend all this set up
 
         // stop the upstream work if the browser goes away mid-stream
         const onClose = (): void => {

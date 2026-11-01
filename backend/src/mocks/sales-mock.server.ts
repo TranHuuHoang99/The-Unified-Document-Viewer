@@ -33,6 +33,16 @@ export function createSalesMockApp(store: DocumentStore): Application {
         }
     });
 
+    app.get('/api/sales/vin', async (req: Request, res: Response) => {
+        try {
+            const rows = await store.loadAllVin('sales_documents');
+            res.status(200).json({ success: true, count: rows.length, documents: rows });
+        } catch (err) {
+            console.error('[sales-mock] query failed : ', err);
+            res.status(500).json({ success: false, message: 'Upstream sales system error' });
+        }
+    });
+
     app.get('/health', (req: Request, res: Response) => {
         res.status(200).json({ system: 'sales-mock', status: 'OK', timestamp: new Date() });
     });

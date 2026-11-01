@@ -135,6 +135,12 @@ export class DocumentStore {
         );
     }
 
+    public loadAllVin<T>(tableName: string): Promise<T[]> {
+        return this.m_db.all<T[]>(
+            `SELECT vin FROM ${quoteIdentifier(tableName)}`
+        );
+    }
+
     public async close(): Promise<void> {
         await this.m_db.close();
     }

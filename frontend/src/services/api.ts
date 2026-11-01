@@ -1,6 +1,25 @@
 import { API_ENDPOINTS } from '../constants/api.endpoints';
 import { IDocumentSearchResponse } from '../types/document.types';
 
+export const fetchSuggestionsByVinSubstr = async(vinSubstr: string, signal?: AbortSignal): Promise<string[]> => {
+    const response = await fetch(API_ENDPOINTS.SUGGESTIONS.SEARCH(vinSubstr), {
+        signal: signal ?? null,
+        headers: {
+            Accept: 'application/json'
+        },
+        method: 'GET'
+    });
+
+    if (!response.ok) {
+        const body = await response.json().catch(() => null);
+        throw new Error(body?.message || `Request failed with status ${response.status}`);
+    }
+
+    const ret = await response.json();
+    // backend has to pack all vin suggestions into .data field
+    return ret.data;
+}
+
 /*
     Streams the consolidated document list for a VIN.
 
@@ -17,7 +36,7 @@ export const fetchDocumentsByVin = async (
 ): Promise<void> => {
     const response = await fetch(API_ENDPOINTS.DOCUMENTS.SEARCH(vin), {
         signal: signal ?? null,
-        headers: { Accept: 'text/event-stream' },
+        headers: { Accept: 'application/x-ndjson' },
     });
 
     if (!response.ok) {

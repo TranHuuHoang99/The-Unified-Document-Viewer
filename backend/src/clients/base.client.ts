@@ -28,6 +28,18 @@ interface IUpstreamResponse<T> {
       can enforce one timeout across all sources
 */
 export abstract class BaseHttpClient {
+    private static m_instances = new Map<any, any>();
+
+    protected constructor() {}
+
+    public static instance<T extends BaseHttpClient>(this: { prototype: T } & Function): T {
+        const TargetClass = this as any;
+        if (!BaseHttpClient.m_instances.has(TargetClass)) {
+            BaseHttpClient.m_instances.set(TargetClass, new TargetClass());
+        }
+        return BaseHttpClient.m_instances.get(TargetClass);
+    }
+
     protected async getDocuments<T>(source: string, url: string, signal: AbortSignal): Promise<T[]> {
         let response: Response;
         try {

@@ -33,3 +33,27 @@ export function validateVin(req: Request, res: Response, next: NextFunction): vo
     req.query.vin = vin;
     next();
 }
+
+const SPECIAL_CHAR_PATTERN = /[^a-zA-Z0-9]/;
+export function validateIfAnySpecialChar(req: Request, res: Response, next: NextFunction): void {
+    const raw = req.query.vin;
+    const vin = typeof raw === 'string' ? raw.trim().toUpperCase() : '';
+    if (!vin) {
+        res.status(400).json({
+            success: false,
+            message: 'Missing required query parameter: vin',
+        });
+        return;
+    }
+
+    if (SPECIAL_CHAR_PATTERN.test(vin)) {
+        res.status(400).json({
+            success: false,
+            message: 'Invalid VIN. Special characters, spaces, and accented letters are not allowed.',
+        });
+        return;
+    }
+
+    req.query.vin = vin;
+    next();
+}
